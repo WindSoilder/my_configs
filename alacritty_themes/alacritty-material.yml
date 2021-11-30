@@ -6,18 +6,26 @@ font:
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
-    #   - (Windows) Consolas
-    family: "Inconsolata-Regular_Semi-Expanded-Medium"
+    #   - (Windows) consolas
+    family: "Fira code"
+    style: "Regular"
+  bold:
+    family: "Fira code"
+    style: "Bold"
+  italic:
+    family: "Cascadia mono"
+    style: "SemiLight Italic"
   size:
-    14
+    15
 
 # Base16 Gruvbox dark, hard 256 - alacritty color config
 # Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
+# Colors (Material Theme)
 colors:
   # Default colors
   primary:
-    background: '#f6f6f6'
-    foreground: '#403f53'
+    background: '0x1e282d'
+    foreground: '0xc4c7d1'
 
     # Bright and dim foreground colors
     #
@@ -31,6 +39,7 @@ colors:
   #
   # Colors which should be used to draw the terminal cursor. If these are
   # unset, the cursor color will be the inverse of the cell color.
+
   cursor:
     text: '#1d2021'
     cursor: '#d5c4a1'
@@ -54,25 +63,25 @@ colors:
 
   # Normal colors
   normal:
-    black:   '#403f53'
-    red:     '#de3d3b'
-    green:   '#08916a'
-    yellow:  '#E0AF02'
-    blue:    '#288ed7'
-    magenta: '#d6438a'
-    cyan:    '#2AA298'
-    white:   '#F0F0F0'
+    black:   '0x666666'
+    red:     '0xeb606b'
+    green:   '0xc3e88d'
+    yellow:  '0xf7eb95'
+    blue:    '0x80cbc4'
+    magenta: '0xff2f90'
+    cyan:    '0xaeddff'
+    white:   '0xffffff'
 
   # Bright colors
   bright:
-    black:   '#403f53'
-    red:     '#de3d3b'
-    green:   '#08916a'
-    yellow:  '#daaa01'
-    blue:    '#288ed7'
-    magenta: '#d6438a'
-    cyan:    '#2AA298'
-    white:   '#F0F0F0'
+    black:   '0xff262b'
+    red:     '0xeb606b'
+    green:   '0xc3e88d'
+    yellow:  '0xf7eb95'
+    blue:    '0x7dc6bf'
+    magenta: '0x6c71c4'
+    cyan:    '0x35434d'
+    white:   '0xffffff'
 
   # Dim colors
   #
