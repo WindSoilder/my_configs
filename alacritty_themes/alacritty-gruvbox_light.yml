@@ -6,18 +6,27 @@ font:
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
-    #   - (Windows) Consolas
-    family: "Monoid"
+    #   - (Windows) consolas
+    family: "Fira code"
+    style: "Regular"
+  bold:
+    family: "Fira code"
+    style: "Bold"
+  italic:
+    family: "Cascadia mono"
+    style: "SemiLight Italic"
   size:
-    14
+    15
 
 # Base16 Gruvbox dark, hard 256 - alacritty color config
 # Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 colors:
   # Default colors
   primary:
-    background: '#1d2021'
-    foreground: '#d5c4a1'
+    # hard contrast: background = '0xf9f5d7'
+    background: '0xfbf1c7'
+    # soft contrast: background = '0xf2e5bc'
+    foreground: '0x3c3836'
 
     # Bright and dim foreground colors
     #
@@ -54,25 +63,25 @@ colors:
 
   # Normal colors
   normal:
-    black:   '#1d2021'
-    red:     '#fb4934'
-    green:   '#b8bb26'
-    yellow:  '#fabd2f'
-    blue:    '#83a598'
-    magenta: '#d3869b'
-    cyan:    '#8ec07c'
-    white:   '#d5c4a1'
+    black:   '0xfbf1c7'
+    red:     '0xcc241d'
+    green:   '0x98971a'
+    yellow:  '0xd79921'
+    blue:    '0x458588'
+    magenta: '0xb16286'
+    cyan:    '0x689d6a'
+    white:   '0x7c6f64'
 
   # Bright colors
   bright:
-    black:   '#665c54'
-    red:     '#fb4934'
-    green:   '#b8bb26'
-    yellow:  '#fabd2f'
-    blue:    '#83a598'
-    magenta: '#d3869b'
-    cyan:    '#8ec07c'
-    white:   '#fbf1c7'
+    black:   '0x928374'
+    red:     '0x9d0006'
+    green:   '0x79740e'
+    yellow:  '0xb57614'
+    blue:    '0x076678'
+    magenta: '0x8f3f71'
+    cyan:    '0x427b58'
+    white:   '0x3c3836'
 
   # Dim colors
   #
@@ -105,7 +114,7 @@ colors:
     - { index: 21, color: '#ebdbb2' }
 
 window:
-    startup_mode: Windowed
+    startup_mode: Fullscreen
 
 key_bindings:
     - { key: F,  mods: Alt,           chars: "\x1bf"                       }

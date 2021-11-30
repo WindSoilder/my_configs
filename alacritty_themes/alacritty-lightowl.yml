@@ -6,18 +6,25 @@ font:
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
-    #   - (Windows) Consolas
-    family: "Inconsolata-Regular_Semi-Expanded-Medium"
+    #   - (Windows) consolas
+    family: "Fira code"
+    style: "Regular"
+  bold:
+    family: "Fira code"
+    style: "Bold"
+  italic:
+    family: "Cascadia mono"
+    style: "SemiLight Italic"
   size:
-    14
+    15
 
 # Base16 Gruvbox dark, hard 256 - alacritty color config
 # Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 colors:
   # Default colors
   primary:
-    background: '#011627'
-    foreground: '#d6deeb'
+    background: '#f6f6f6'
+    foreground: '#403f53'
 
     # Bright and dim foreground colors
     #
@@ -54,25 +61,25 @@ colors:
 
   # Normal colors
   normal:
-    black:   '#011627'
-    red:     '#EF5350'
-    green:   '#22da6e'
-    yellow:  '#addb67'
-    blue:    '#82AAFF'
-    magenta: '#C792EA'
-    cyan:    '#21c7a8'
-    white:   '#ffffff'
+    black:   '#403f53'
+    red:     '#de3d3b'
+    green:   '#08916a'
+    yellow:  '#E0AF02'
+    blue:    '#288ed7'
+    magenta: '#d6438a'
+    cyan:    '#2AA298'
+    white:   '#F0F0F0'
 
   # Bright colors
   bright:
-    black:   '#575656'
-    red:     '#EF5350'
-    green:   '#22da6e'
-    yellow:  '#ffeb95'
-    blue:    '#82AAFF'
-    magenta: '#C792EA'
-    cyan:    '#7fdbca'
-    white:   '#ffffff'
+    black:   '#403f53'
+    red:     '#de3d3b'
+    green:   '#08916a'
+    yellow:  '#daaa01'
+    blue:    '#288ed7'
+    magenta: '#d6438a'
+    cyan:    '#2AA298'
+    white:   '#F0F0F0'
 
   # Dim colors
   #
