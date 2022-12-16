@@ -1,3 +1,4 @@
+# delete branches except given `excepts` list
 export def del-branches (
     excepts:list   # don't delete branch in the list
 ) {
