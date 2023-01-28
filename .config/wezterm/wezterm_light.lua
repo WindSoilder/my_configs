@@ -11,6 +11,6 @@ return {
   font = wezterm.font 'Berkeley Mono Variable',
   font_size = 19,
   native_macos_fullscreen_mode = true,
-  color_scheme = "Dracula",
+  color_scheme = "Gruvbox Light",
   hide_tab_bar_if_only_one_tab = true,
 }
