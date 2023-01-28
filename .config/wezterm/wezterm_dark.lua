@@ -8,7 +8,7 @@ wezterm.on("gui-startup", function(cmd)
   end)
 
 return {
-  font = wezterm.font 'BerkeleyMono Nerd Font',
+  font = wezterm.font 'Berkeley Mono Variable',
   font_size = 19,
   native_macos_fullscreen_mode = true,
   color_scheme = "Dracula",

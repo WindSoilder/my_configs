@@ -322,7 +322,7 @@ keybinds clear-defaults=true {
 // Default: default
 //
 // theme "default"
-theme "gruvbox-light"
+theme "gruvbox-dark"
 
 // The name of the default layout to load on startup
 // Default: "default"
