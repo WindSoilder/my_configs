@@ -4,7 +4,6 @@ keybinds clear-defaults=true {
         bind "Ctrl o" { SwitchToMode "session"; }
         bind "Ctrl h" { SwitchToMode "move"; }
     }
-
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
         bind "p" { SwitchToMode "pane"; }
@@ -70,8 +69,8 @@ keybinds clear-defaults=true {
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
         bind "j" "Down" { ScrollDown; }
         bind "k" "Up" { ScrollUp; }
-        bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
-        bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
+        bind "PageDown" "Right" "l" { PageScrollDown; }
+        bind "PageUp" "Left" "h" { PageScrollUp; }
         bind "d" { HalfPageScrollDown; }
         bind "u" { HalfPageScrollUp; }
         // uncomment this and adjust key if using copy_on_select=false
@@ -87,8 +86,8 @@ keybinds clear-defaults=true {
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
         bind "j" "Down" { ScrollDown; }
         bind "k" "Up" { ScrollUp; }
-        bind "Ctrl f" "PageDown" "Right" "l" { PageScrollDown; }
-        bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
+        bind "PageDown" "Right" "l" { PageScrollDown; }
+        bind "PageUp" "Left" "h" { PageScrollUp; }
         bind "d" { HalfPageScrollDown; }
         bind "u" { HalfPageScrollUp; }
         bind "n" { Search "down"; }
@@ -145,12 +144,6 @@ keybinds clear-defaults=true {
     shared_except "normal" "locked" {
         bind "Enter" "Space" "Esc" { SwitchToMode "Normal"; }
     }
-    shared_except "pane" "locked" {
-        bind "Ctrl p" { SwitchToMode "Pane"; }
-    }
-    shared_except "resize" "locked" {
-        bind "Ctrl n" { SwitchToMode "Resize"; }
-    }
     shared_except "scroll" "locked" {
         bind "Ctrl s" { SwitchToMode "Scroll"; }
     }
@@ -162,9 +155,6 @@ keybinds clear-defaults=true {
     }
     shared_except "move" "locked" {
         bind "Ctrl h" { SwitchToMode "Move"; }
-    }
-    shared_except "tmux" "locked" {
-        bind "Ctrl b" { SwitchToMode "Tmux"; }
     }
 }
 
