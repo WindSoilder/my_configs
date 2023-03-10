@@ -15,7 +15,7 @@ export def-env auto_load_theme [] {
 
 def-env lt [] {
     let-env BAT_THEME = "gruvbox-light"
-    let-env LS_COLORS = (vivid generate gruvbox-light)
+    let-env LS_COLORS = (vivid generate ~/.config/vivid/gruvbox-light.yml)
 
     use ./themes/gruvbox_light_theme.nu *
     let-env config = ($env.config | merge {color_config: (gruvbox_light-medium)})
@@ -26,7 +26,7 @@ def-env lt [] {
 
 def-env dt [] {
     let-env BAT_THEME = "Dracula"
-    let-env LS_COLORS = (vivid generate dracula)
+    let-env LS_COLORS = (vivid generate ~/.config/vivid/dracula.yml)
 
     use ./themes/dracula_theme.nu *
     let-env config = ($env.config | merge {color_config: (dracula)})
