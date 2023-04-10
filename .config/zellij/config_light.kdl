@@ -1,7 +1,6 @@
 keybinds clear-defaults=true {
     normal {
         bind "Ctrl s" { SwitchToMode "scroll"; }
-        bind "Ctrl o" { SwitchToMode "session"; }
         bind "Ctrl h" { SwitchToMode "move"; }
     }
     locked {
@@ -9,6 +8,7 @@ keybinds clear-defaults=true {
         bind "p" { SwitchToMode "pane"; }
         bind "t" { SwitchToMode "tab"; }
         bind "n" { SwitchToMode "resize"; }
+        bind "o" { SwitchToMode "session"; }
     }
     pane {
         bind "Ctrl p" { SwitchToMode "Normal"; }
@@ -77,7 +77,6 @@ keybinds clear-defaults=true {
         // bind "Alt c" { Copy; }
     }
     session {
-        bind "Ctrl o" { SwitchToMode "Normal"; }
         bind "Ctrl s" { SwitchToMode "Scroll"; }
         bind "d" { Detach; }
     }
@@ -149,9 +148,7 @@ keybinds clear-defaults=true {
     shared_except "scroll" "locked" {
         bind "Ctrl s" { SwitchToMode "Scroll"; }
     }
-    shared_except "session" "locked" {
-        bind "Ctrl o" { SwitchToMode "Session"; }
-    }
+
     shared_except "tab" "locked" {
         bind "Ctrl t" { SwitchToMode "Tab"; }
     }
