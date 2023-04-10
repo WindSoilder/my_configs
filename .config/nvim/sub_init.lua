@@ -112,15 +112,14 @@ require('lazy').setup({
     },
   },
 
-  --[[
-  { -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
+  {
+    'sainnhe/gruvbox-material',
+    priority = 900,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'gruvbox-material'
+      vim.g.gruvbox_material_background = 'hard'
     end,
   },
-  --]]
 
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -523,3 +522,4 @@ require('gitsigns').setup{
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
