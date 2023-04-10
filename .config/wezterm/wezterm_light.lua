@@ -13,4 +13,6 @@ return {
   native_macos_fullscreen_mode = true,
   color_scheme = "Gruvbox Light",
   hide_tab_bar_if_only_one_tab = true,
+  key = "LeftBracket", mods = "ALT", action = wezterm.action{SendString="\x1b["},
+  key = "RightBracket", mods = "ALT", action = wezterm.action{SendString="\x1b]"}
 }

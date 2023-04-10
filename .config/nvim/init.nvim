@@ -1,0 +1,7 @@
+packadd! dracula_pro
+
+syntax enable
+
+colorscheme dracula_pro_blade
+
+luafile ~/.config/nvim/sub_init.lua
