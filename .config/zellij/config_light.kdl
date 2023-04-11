@@ -1,6 +1,5 @@
 keybinds clear-defaults=true {
     normal {
-        bind "Ctrl s" { SwitchToMode "scroll"; }
         bind "Ctrl h" { SwitchToMode "move"; }
     }
     locked {
@@ -9,6 +8,7 @@ keybinds clear-defaults=true {
         bind "t" { SwitchToMode "tab"; }
         bind "n" { SwitchToMode "resize"; }
         bind "o" { SwitchToMode "session"; }
+        bind "s" { SwitchToMode "scroll" }
     }
     pane {
         bind "Ctrl p" { SwitchToMode "Normal"; }
@@ -145,7 +145,7 @@ keybinds clear-defaults=true {
     shared_except "normal" "locked" {
         bind "Enter" "Space" "Esc" { SwitchToMode "Normal"; }
     }
-    shared_except "scroll" "locked" {
+    shared_except "scroll" "locked" "normal" {
         bind "Ctrl s" { SwitchToMode "Scroll"; }
     }
 
