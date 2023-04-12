@@ -8,7 +8,7 @@ keybinds clear-defaults=true {
         bind "t" { SwitchToMode "tab"; }
         bind "n" { SwitchToMode "resize"; }
         bind "o" { SwitchToMode "session"; }
-        bind "s" { SwitchToMode "scroll" }
+        bind "s" { SwitchToMode "scroll"; }
     }
     pane {
         bind "Ctrl p" { SwitchToMode "Normal"; }
