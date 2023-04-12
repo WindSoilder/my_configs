@@ -134,8 +134,8 @@ require('lazy').setup({
     -- See `:help lualine.txt`
     opts = {
       options = {
-        icons_enabled = false,
-        -- theme = 'dracula_pro',
+        icons_enabled = true,
+        path = 1,
         component_separators = '|',
         section_separators = '',
       },
@@ -179,6 +179,10 @@ require('lazy').setup({
     config = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
+  },
+
+  {
+    'm4xshen/autoclose.nvim',
   },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
@@ -527,6 +531,9 @@ require('gitsigns').setup{
     end, {expr=true, desc = 'goto prev hunk'})
   end
 }
+
+-- setup auto-pair
+require("autoclose").setup()
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
