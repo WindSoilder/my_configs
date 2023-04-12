@@ -116,8 +116,16 @@ require('lazy').setup({
     'sainnhe/gruvbox-material',
     priority = 900,
     config = function()
-      vim.cmd.colorscheme 'gruvbox-material'
+      -- vim.cmd.colorscheme 'gruvbox-material'
       vim.g.gruvbox_material_background = 'hard'
+    end,
+  },
+
+  {
+    'sainnhe/everforest',
+    config = function()
+      vim.cmd.colorscheme 'everforest'
+      vim.g.everforest_background = 'hard'
     end,
   },
 
@@ -187,7 +195,7 @@ require('lazy').setup({
   --
   --    An additional note is that if you only copied in the `init.lua`, you can just comment this line
   --    to get rid of the warning telling you that there are not plugins in `lua/custom/plugins/`.
-  --  { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
@@ -300,9 +308,9 @@ require('nvim-treesitter.configs').setup {
     enable = true,
     keymaps = {
       init_selection = '<c-space>',
-      node_incremental = '<c-space>',
+      node_incremental = '<c-i>',
       scope_incremental = '<c-s>',
-      node_decremental = '<M-space>',
+      node_decremental = '<c-d>',
     },
   },
   textobjects = {
