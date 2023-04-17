@@ -41,6 +41,8 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+-- setup python path for python-lsp-server
+-- vim.g.python3_host_prog = ''
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -422,6 +424,18 @@ local servers = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
+    },
+  },
+
+  -- using black formatter instead of autopep8 and yapf
+  -- you need to install python-lsp-black manually
+  pylsp = {
+    pylsp = {
+      plugins = {
+        autopep8 = { enabled = false },
+        yapf = { enabled = false },
+        black = { enabled = true },
+      },
     },
   },
 }
