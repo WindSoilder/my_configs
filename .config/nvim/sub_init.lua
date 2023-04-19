@@ -123,6 +123,14 @@ require('lazy').setup({
     end,
   },
 
+  {
+    'sainnhe/everforest',
+    config = function()
+      vim.cmd.colorscheme 'everforest'
+      vim.g.everforest_background = 'hard'
+    end,
+  },
+
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
@@ -237,6 +245,10 @@ vim.o.completeopt = 'menuone,noinsert,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+-- Using treesitter folding
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -256,6 +268,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
   group = highlight_group,
   pattern = '*',
+})
+
+-- have to refresh fold because of the following issue
+-- https://github.com/nvim-treesitter/nvim-treesitter/issues/1337#issuecomment-864442660
+-- https://github.com/nvim-telescope/telescope.nvim/issues/699
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+    pattern = { "*" },
+    command = "normal zx zR",
 })
 
 -- [[ Configure Telescope ]]
@@ -536,6 +556,9 @@ require('gitsigns').setup{
       vim.schedule(function() gs.prev_hunk() end)
       return '<Ignore>'
     end, {expr=true, desc = 'goto prev hunk'})
+
+    -- Actions 
+    map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
   end
 }
 
