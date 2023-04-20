@@ -177,6 +177,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
+      'nvim-treesitter/nvim-treesitter-context',
     },
     config = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
@@ -246,8 +247,8 @@ vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.o.termguicolors = true
 
 -- Using treesitter folding
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- [[ Basic Keymaps ]]
 
