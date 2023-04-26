@@ -124,10 +124,9 @@ require('lazy').setup({
   },
 
   {
-    'sainnhe/everforest',
+    'hardhackerlabs/theme-vim',
     config = function()
-      vim.cmd.colorscheme 'everforest'
-      vim.g.everforest_background = 'hard'
+      vim.cmd.colorscheme 'hardhacker'
     end,
   },
 
@@ -305,6 +304,13 @@ vim.keymap.set('n', '<leader>/', function()
     previewer = false,
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
+vim.keymap.set('n', '<leader>o', function()
+  -- You can pass additional configuration to telescope to change theme, layout, etc.
+  require('telescope.builtin').lsp_document_symbols(require('telescope.themes').get_dropdown {
+    winblend = 10,
+  })
+end, { desc = '[o] List symbols in current buffer' })
+
 
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
@@ -445,18 +451,6 @@ local servers = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
-    },
-  },
-
-  -- using black formatter instead of autopep8 and yapf
-  -- you need to install python-lsp-black manually
-  pylsp = {
-    pylsp = {
-      plugins = {
-        autopep8 = { enabled = false },
-        yapf = { enabled = false },
-        black = { enabled = true },
-      },
     },
   },
 }
