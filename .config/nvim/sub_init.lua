@@ -306,7 +306,7 @@ vim.keymap.set('n', '<leader>/', function()
 end, { desc = '[/] Fuzzily search in current buffer' })
 vim.keymap.set('n', '<leader>o', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').lsp_document_symbols(require('telescope.themes').get_dropdown {
+  require('telescope.builtin').treesitter(require('telescope.themes').get_dropdown {
     winblend = 10,
   })
 end, { desc = '[o] List symbols in current buffer' })
