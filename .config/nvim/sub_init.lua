@@ -35,14 +35,11 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now :)
 --]]
-
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
--- setup python path for python-lsp-server
--- vim.g.python3_host_prog = ''
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -77,7 +74,8 @@ require('lazy').setup({
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
-  { -- LSP Configuration & Plugins
+  {
+    -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
@@ -93,14 +91,16 @@ require('lazy').setup({
     },
   },
 
-  { -- Autocompletion
+  {
+    -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
-  { -- Adds git releated signs to the gutter, as well as utilities for managing changes
+  { 'folke/which-key.nvim',          opts = {} },
+  {
+    -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
@@ -118,19 +118,13 @@ require('lazy').setup({
     'sainnhe/gruvbox-material',
     priority = 900,
     config = function()
-      -- vim.cmd.colorscheme 'gruvbox-material'
+      vim.cmd.colorscheme 'gruvbox-material'
       vim.g.gruvbox_material_background = 'hard'
     end,
   },
 
   {
-    'hardhackerlabs/theme-vim',
-    config = function()
-      vim.cmd.colorscheme 'hardhacker'
-    end,
-  },
-
-  { -- Set lualine as statusline
+    -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
@@ -143,7 +137,8 @@ require('lazy').setup({
     },
   },
 
-  { -- Add indentation guides even on blank lines
+  {
+    -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
@@ -154,10 +149,10 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',         opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -172,7 +167,8 @@ require('lazy').setup({
     end,
   },
 
-  { -- Highlight, edit, and navigate code
+  {
+    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
@@ -184,9 +180,24 @@ require('lazy').setup({
   },
 
   {
-    'm4xshen/autoclose.nvim',
+    'windwp/nvim-autopairs',
   },
 
+  {
+    'stevearc/aerial.nvim',
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    }
+  },
+
+  {
+    -- dependency for folding
+    'kevinhwang91/nvim-ufo',
+    dependencies = {
+      'kevinhwang91/promise-async',
+    }
+  },
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -245,10 +256,6 @@ vim.o.completeopt = 'menuone,noinsert,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
--- Using treesitter folding
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -258,6 +265,8 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set('i', '<C-n>', '<Up>')
+vim.keymap.set('i', '<C-p>', '<Down>')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -270,13 +279,25 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- have to refresh fold because of the following issue
--- https://github.com/nvim-treesitter/nvim-treesitter/issues/1337#issuecomment-864442660
--- https://github.com/nvim-telescope/telescope.nvim/issues/699
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
-    pattern = { "*" },
-    command = "normal zx zR",
-})
+
+-- configure fold
+vim.o.foldcolumn = '1' -- '0' is not bad
+vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true
+}
+local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+for _, ls in ipairs(language_servers) do
+  require('lspconfig')[ls].setup({
+    capabilities = capabilities
+    -- you can add other fields for setting up lsp server in this table
+  })
+end
+require('ufo').setup()
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -304,12 +325,7 @@ vim.keymap.set('n', '<leader>/', function()
     previewer = false,
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
-vim.keymap.set('n', '<leader>o', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').treesitter(require('telescope.themes').get_dropdown {
-    winblend = 10,
-  })
-end, { desc = '[o] List symbols in current buffer' })
+vim.keymap.set('n', '<leader>o', '<cmd>AerialToggle<CR>')
 
 
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
@@ -529,7 +545,7 @@ cmp.setup {
 }
 
 -- setup for nexthunk, prevhunk key binding
-require('gitsigns').setup{
+require('gitsigns').setup {
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
 
@@ -544,22 +560,33 @@ require('gitsigns').setup{
       if vim.wo.diff then return ']c' end
       vim.schedule(function() gs.next_hunk() end)
       return '<Ignore>'
-    end, {expr=true, desc = 'goto next hunk'})
+    end, { expr = true, desc = 'goto next hunk' })
 
     map('n', '[c', function()
       if vim.wo.diff then return '[c' end
       vim.schedule(function() gs.prev_hunk() end)
       return '<Ignore>'
-    end, {expr=true, desc = 'goto prev hunk'})
+    end, { expr = true, desc = 'goto prev hunk' })
 
-    -- Actions 
-    map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+    -- Actions
+    map({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>')
   end
 }
 
 -- setup auto-pair
-require("autoclose").setup()
+local npairs = require("nvim-autopairs")
+npairs.setup({
+  enable_check_bracket_line = false,
+  ignored_next_char = "[%w%.]", -- will ignore alphanumeric and `.` symbol
+})
 
+require('aerial').setup({
+  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+  on_attach = function(bufnr)
+    -- Jump forwards/backwards with '{' and '}'
+    vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', { buffer = bufnr })
+    vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', { buffer = bufnr })
+  end
+})
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-
