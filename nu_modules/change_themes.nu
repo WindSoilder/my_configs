@@ -14,22 +14,22 @@ export def-env auto_load_theme [] {
 }
 
 def-env lt [] {
-    let-env BAT_THEME = "gruvbox-light"
-    let-env LS_COLORS = (vivid generate ~/.config/vivid/gruvbox-light.yml)
+    $env.BAT_THEME = "gruvbox-light"
+    $env.LS_COLORS = (vivid generate ~/.config/vivid/gruvbox-light.yml)
 
     use ./themes/gruvbox_light_theme.nu *
-    let-env config = ($env.config | merge {color_config: (gruvbox_light-medium)})
+    $env.config = ($env.config | merge {color_config: (gruvbox_light-medium)})
 
     cp ~/.config/wezterm/wezterm_light.lua ~/.config/wezterm/wezterm.lua
     cp ~/.config/zellij/config_light.kdl ~/.config/zellij/config.kdl
 }
 
 def-env dt [] {
-    let-env BAT_THEME = "Dracula"
-    let-env LS_COLORS = (vivid generate ~/.config/vivid/dracula.yml)
+    $env.BAT_THEME = "Dracula"
+    $env.LS_COLORS = (vivid generate ~/.config/vivid/dracula.yml)
 
     use ./themes/dracula_theme.nu *
-    let-env config = ($env.config | merge {color_config: (dracula)})
+    $env.config = ($env.config | merge {color_config: (dracula)})
 
     cp ~/.config/wezterm/wezterm_dark.lua ~/.config/wezterm/wezterm.lua
     cp ~/.config/zellij/config_dark.kdl ~/.config/zellij/config.kdl
