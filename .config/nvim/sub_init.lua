@@ -332,7 +332,6 @@ vim.keymap.set('n', '<leader>/', function()
     previewer = false,
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
-vim.keymap.set('n', '<leader>o', '<cmd>AerialToggle<CR>')
 
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
@@ -456,6 +455,11 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+
+  if client.server_capabilities.inlayHintProvider then
+    nmap('<leader>ih', function() vim.lsp.inlay_hint(0, nil) end, "Toggle [I]nlay [H]int")
+  end
+  client.server_capabilities.semanticTokensProvider = nil
 end
 
 -- Enable the following language servers
@@ -564,6 +568,8 @@ npairs.setup({
   ignored_next_char = "[%w%.]", -- will ignore alphanumeric and `.` symbol
 })
 
+-- setup aerial
+vim.keymap.set('n', '<leader>o', '<cmd>AerialToggle<CR>')
 require('aerial').setup({
   -- optionally use on_attach to set keymaps when aerial has attached to a buffer
   on_attach = function(bufnr)
