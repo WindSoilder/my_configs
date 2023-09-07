@@ -155,6 +155,20 @@ require('lazy').setup({
   },
 
   {
+    "hardhackerlabs/theme-vim",
+    name = "hardhacker",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.g.hardhacker_hide_tilde = 1
+      vim.g.hardhacker_keyword_italic = 0
+      -- custom highlights
+      vim.g.hardhacker_custom_highlights = {}
+      vim.cmd("colorscheme hardhacker")
+    end,
+  },
+
+  {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
@@ -207,7 +221,7 @@ require('lazy').setup({
     'stevearc/aerial.nvim',
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
+      "nvim-tree/nvim-web-devicons"
     }
   },
 
@@ -336,10 +350,11 @@ vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc =
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
+  -- require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+  --   winblend = 10,
+  --   previewer = true,
+  -- })
+  require('telescope.builtin').current_buffer_fuzzy_find()
 end, { desc = '[/] Fuzzily search in current buffer' })
 
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
@@ -423,7 +438,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -589,7 +604,13 @@ require('aerial').setup({
     -- Jump forwards/backwards with '{' and '}'
     vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', { buffer = bufnr })
     vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', { buffer = bufnr })
-  end
+  end,
+  nav = {
+    preview = true
+  }
 })
+
+-- setup short key for formatting python code
+vim.keymap.set('n', '<leader>f', '<cmd>!black %<CR>', { desc = 'formatting python code use black' })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
