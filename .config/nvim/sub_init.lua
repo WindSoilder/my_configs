@@ -615,3 +615,40 @@ require('aerial').setup({
 vim.keymap.set('n', '<leader>f', '<cmd>!black %<CR>', { desc = 'formatting python code use black' })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- setting up nushell language server support.
+local lspconfig = require('lspconfig')
+lspconfig.nushell.setup {
+  cmd = { "nu", "--lsp" },
+  filetypes = { "nu" },
+  root_dir = function(fname)
+    local git_root = lspconfig.util.find_git_ancestor(fname)
+    if git_root then
+      return git_root
+    else
+      return vim.fn.fnamemodify(fname, ":p:h") -- get the parent directory of the file
+    end
+  end,
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+
+-- setting up nushell filetype support
+vim.filetype.add({
+    extension = {
+        nu = "nu",
+        nush = "nu",
+        nuon = "nu",
+        nushell = "nu",
+    },
+})
+
+local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+parser_config.nu = {
+  install_info = {
+    url = "https://github.com/nushell/tree-sitter-nu",
+    files = { "src/parser.c" },
+    branch = "main",
+  },
+  filetype = "nu",
+}
