@@ -165,8 +165,8 @@ keybinds clear-defaults=true {
     shared_except "move" "locked" {
         bind "Ctrl h" { SwitchToMode "Move"; }
     }
-    shared_except "pane" "locked" {
-        bind "Ctrl p" { SwitchToMode "Pane"; }
+    shared_except "normal" {
+        bind "Ctrl g" { SwitchToMode "normal"; }
     }
     shared_except "tab" {
         bind "Alt 1" { GoToTab 1; SwitchToMode "Normal"; }
