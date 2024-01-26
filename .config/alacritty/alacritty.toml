@@ -29,135 +29,96 @@ foreground = "0xeee9fc"
 [cursor.style]
 shape = "Beam"
 
+
+# [font.bold]
+# family = "CaskaydiaCove Nerd Font"
+# style = "Light"
+#
+# [font.bold_italic]
+# family = "CaskaydiaCove Nerd Font"
+# style = "LightItalic"
+#
+# [font.italic]
+# family = "CaskaydiaCove Nerd Font"
+# style = "LightItalic"
+#
+# [font.normal]
+# family = "CaskaydiaCove Nerd Font"
+# style = "Light"
+
 [font]
-size = 15
+size = 17
+bold = { family = "CaskaydiaCove Nerd Font", style = "Light"}
+bold_italic = { family = "CaskaydiaCove Nerd Font", style = "LightItalic"}
+italic = { family = "CaskaydiaCove Nerd Font", style = "LightItalic"}
+normal = { family = "CaskaydiaCove Nerd Font", style = "Light"}
 
-[font.bold]
-family = "Maple Mono NF"
-style = "Regular"
 
-[font.bold_italic]
-family = "Maple Mono NF"
-style = "Italic"
+# [font.bold]
+# family = "BerkeleyMono Nerd Font"
+# style = "Regular"
+#
+# [font.bold_italic]
+# family = "BerkeleyMono Nerd Font"
+# style = "Italic"
+#
+# [font.italic]
+# family = "BerkeleyMono Nerd Font"
+# style = "Italic"
+#
+# [font.normal]
+# family = "BerkeleyMono Nerd Font"
+# style = "Regular"
 
-[font.italic]
-family = "Maple Mono NF"
-style = "Italic"
+[keyboard]
+bindings = [
+    { key = "F", mods = "Alt", chars = "\u001Bf"},
+    { key = "V", mods = "Alt", chars = "\u001Bv"},
+    { key = "P", mods = "Alt", chars = "\u001Bp"},
+    { key = "D", mods = "Alt", chars = "\u001Bd"},
+    { key = "LBracket", mods = "Alt", chars = "\u001B["},
+    { key = "RBracket", mods = "Alt", chars = "\u001B]"},
+    { key = "1", mods = "Alt", chars = "\u001B1"},
+    { key = "2", mods = "Alt", chars = "\u001B2"},
+    { key = "3", mods = "Alt", chars = "\u001B3"},
+    { key = "4", mods = "Alt", chars = "\u001B4"},
+    { key = "5", mods = "Alt", chars = "\u001B5"},
+]
 
-[font.normal]
-family = "Maple Mono NF"
-style = "Regular"
-
-[[keyboard.bindings]]
-chars = "\u001Bf"
-key = "F"
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "\u001Bb"
-key = "B"
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "\u001Bv"
-key = "V"
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "\u001Bp"
-key = "P"
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "\u001Bd"
-key = "D"
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "\u001B["
-key = "LBracket"
-mods = "Alt"
-
-[[keyboard.bindings]]
-chars = "\u001B]"
-key = "RBracket"
-mods = "Alt"
-
-[schemes.gruvbox_material_hard_dark.bright]
-black = "0x32302f"
-blue = "0x7daea3"
-cyan = "0x89b482"
-green = "0xa9b665"
-magenta = "0xd3869b"
-red = "0xea6962"
-white = "0xd4be98"
-yellow = "0xd8a657"
-
-[schemes.gruvbox_material_hard_dark.normal]
-black = "0x32302f"
-blue = "0x7daea3"
-cyan = "0x89b482"
-green = "0xa9b665"
-magenta = "0xd3869b"
-red = "0xea6962"
-white = "0xd4be98"
-yellow = "0xd8a657"
-
-[schemes.gruvbox_material_hard_dark.primary]
-background = "0x1d2021"
-foreground = "0xd4be98"
-
-[schemes.gruvbox_material_hard_light.bright]
-black = "0x654735"
-blue = "0x45707a"
-cyan = "0x4c7a5d"
-green = "0x6c782e"
-magenta = "0x945e80"
-red = "0xc14a4a"
-white = "0xf2e5bc"
-yellow = "0xb47109"
-
-[schemes.gruvbox_material_hard_light.normal]
-black = "0x654735"
-blue = "0x45707a"
-cyan = "0x4c7a5d"
-green = "0x6c782e"
-magenta = "0x945e80"
-red = "0xc14a4a"
-white = "0xf2e5bc"
-yellow = "0xb47109"
-
-[schemes.gruvbox_material_hard_light.primary]
-background = "0xf9f5d7"
-foreground = "0x654735"
-
-[schemes.hardhacker.bright]
-black = "0x3f3951"
-blue = "0xb1baf4"
-cyan = "0xb3f4f3"
-green = "0xb1f2a7"
-magenta = "0xe192ef"
-red = "0xe965a5"
-white = "0xeee9fc"
-yellow = "0xebde76"
-
-[schemes.hardhacker.cursor]
-cursor = "0xeee9fc"
-text = "0xeee9fc"
-
-[schemes.hardhacker.normal]
-black = "0x282433"
-blue = "0xb1baf4"
-cyan = "0xb3f4f3"
-green = "0xb1f2a7"
-magenta = "0xe192ef"
-red = "0xe965a5"
-white = "0xeee9fc"
-yellow = "0xebde76"
-
-[schemes.hardhacker.primary]
-background = "0x282433"
-foreground = "0xeee9fc"
+# [[keyboard.bindings]]
+# chars = "\u001Bf"
+# key = "F"
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "\u001Bb"
+# key = "B"
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "\u001Bv"
+# key = "V"
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "\u001Bp"
+# key = "P"
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "\u001Bd"
+# key = "D"
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "\u001B["
+# key = "LBracket"
+# mods = "Alt"
+#
+# [[keyboard.bindings]]
+# chars = "\u001B]"
+# key = "RBracket"
+# mods = "Alt"
 
 [window]
 startup_mode = "Fullscreen"
