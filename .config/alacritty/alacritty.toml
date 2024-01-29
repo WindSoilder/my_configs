@@ -73,7 +73,7 @@ normal = { family = "CaskaydiaCove Nerd Font", style = "Light"}
 [keyboard]
 bindings = [
     { key = "F", mods = "Alt", chars = "\u001Bf"},
-    { key = "B", mods = "Alt", chars = "\u001Bv"},
+    { key = "B", mods = "Alt", chars = "\u001Bb"},
     { key = "V", mods = "Alt", chars = "\u001Bv"},
     { key = "P", mods = "Alt", chars = "\u001Bp"},
     { key = "D", mods = "Alt", chars = "\u001Bd"},
