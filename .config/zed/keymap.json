@@ -5,5 +5,16 @@
       "alt-b": ["terminal::SendText", "\u001b\u0062"],
       "alt-f": ["terminal::SendText", "\u001b\u0066"]
     }
+  },
+  {
+    "bindings": {
+      "alt-g": "go_to_line::Toggle"
+    }
+  },
+  {
+    "context": "Editor && (vim_mode == visual || vim_mode == normal) && !VimWaiting && !menu",
+    "bindings": {
+      "g c": "editor::ToggleComments"
+    }
   }
 ]
