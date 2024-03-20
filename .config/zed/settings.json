@@ -7,11 +7,10 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "theme": "Gruvbox Dark Hard",
   "ui_font_size": 17,
   "buffer_font_size": 14,
   "buffer_font_family": "BerkeleyMono Nerd Font",
-  "ui_font_family": "BerkeleyMono Nerd Font",
   "vim_mode": true,
-  "relative_line_numbers": true
+  "relative_line_numbers": true,
+  "vertical_scroll_margin": 0
 }

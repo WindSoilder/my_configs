@@ -14,7 +14,13 @@
   {
     "context": "Editor && (vim_mode == visual || vim_mode == normal) && !VimWaiting && !menu",
     "bindings": {
-      "g c": "editor::ToggleComments"
+      "shift-y": ["workspace::SendKeystrokes", "y $"],
+      "g c": "editor::ToggleComments",
+      "g r": "editor::FindAllReferences",
+      "space s f": "file_finder::Toggle",
+      "space r n": "editor::Rename",
+      "space n h": "editor::GoToHunk",
+      "space p h": "editor::GoToPrevHunk"
     }
   }
 ]
