@@ -43,7 +43,7 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 -- setup python path for python-lsp-server
--- vim.g.python3_host_prog = '/Users/WindSoilder/bin/python3'
+vim.g.python3_host_prog = '/Users/WindSoilder/bin/python3'
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -133,12 +133,11 @@ require('lazy').setup({
   },
 
   {
-    'sainnhe/gruvbox-material',
-    priority = 900,
+    'rmehri01/onenord.nvim',
     config = function()
-      vim.cmd.colorscheme 'gruvbox-material'
-      vim.g.gruvbox_material_background = 'hard'
-    end,
+      vim.cmd.colorscheme 'onenord'
+      -- vim.o.background = 'light'
+    end
   },
 
   {
@@ -165,7 +164,7 @@ require('lazy').setup({
       vim.g.hardhacker_keyword_italic = 0
       -- custom highlights
       vim.g.hardhacker_custom_highlights = {}
-      vim.cmd("colorscheme hardhacker")
+      -- vim.cmd("colorscheme hardhacker")
     end,
   },
 
