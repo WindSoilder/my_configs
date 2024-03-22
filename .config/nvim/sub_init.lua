@@ -392,6 +392,7 @@ require('lazy').setup({
         --   winblend = 10,
         --   previewer = false,
         -- })
+        require('telescope.builtin').current_buffer_fuzzy_find()
       end, { desc = '[/] Fuzzily search in current buffer' })
 
       -- It's also possible to pass additional configuration options.
