@@ -261,16 +261,6 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
-    ------------------
-    -- Wind Setup:
-    ------------------
-    on_attach = function(bufnr)
-      vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk,
-        { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
-      vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
-      vim.keymap.set('n', '<leader>ph', require('gitsigns').preview_hunk, { buffer = bufnr, desc = '[P]review [H]unk' })
-      vim.keymap.set('n', '<leader>hr', require('gitsigns').reset_hunk, { buffer = bufnr, desc = '[H]unk [R]eset' })
-    end,
   },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
@@ -1037,6 +1027,19 @@ require('aerial').setup({
   nav = {
     preview = true
   }
+})
+
+-- setup gitsigns
+local gitsigns = require('gitsigns')
+gitsigns.setup({
+  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+  on_attach = function(bufnr)
+    vim.keymap.set('n', '<leader>gp', gitsigns.prev_hunk,
+      { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
+    vim.keymap.set('n', '<leader>gn', gitsigns.next_hunk, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
+    vim.keymap.set('n', '<leader>ph', gitsigns.preview_hunk, { buffer = bufnr, desc = '[P]review [H]unk' })
+    vim.keymap.set('n', '<leader>hr', gitsigns.reset_hunk, { buffer = bufnr, desc = '[H]unk [R]eset' })
+  end,
 })
 
 -- setup short key for formatting python code
