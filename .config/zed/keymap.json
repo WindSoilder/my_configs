@@ -22,5 +22,23 @@
       "space n h": "editor::GoToHunk",
       "space p h": "editor::GoToPrevHunk"
     }
+  },
+  {
+    "context": "Editor && vim_mode == insert && !VimWating && !menu",
+    "bindings": {
+      "ctrl-d": "editor::Delete",
+      "ctrl-b": "editor::MoveLeft",
+      "ctrl-n": "editor::MoveDown",
+      "ctrl-p": "editor::MoveUp",
+      "alt-b": "editor::MoveToPreviousWordStart",
+      "alt-f": "editor::MoveToNextWordEnd"
+    }
+  },
+  {
+    "context": "Editor && menu",
+    "bindings": {
+      "ctrl-y": "editor::ConfirmCompletion",
+      "enter": "editor::Newline"
+    }
   }
 ]
