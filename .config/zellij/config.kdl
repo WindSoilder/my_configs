@@ -30,8 +30,10 @@ keybinds clear-defaults=true {
     tab {
         bind "Ctrl t" { SwitchToMode "Normal"; }
         bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; }
-        bind "h" "Left" "Up" "k" { GoToPreviousTab; }
-        bind "l" "Right" "Down" "j" { GoToNextTab; }
+        bind "h" "Up" "k" { GoToPreviousTab; }
+        bind "l" "Down" "j" { GoToNextTab; }
+        bind "Left" { MoveTab "Left"; }
+        bind "Right" { MoveTab "Right"; }
         bind "c" { NewTab; SwitchToMode "Normal"; }
         bind "x" { CloseTab; SwitchToMode "Normal"; }
         bind "s" { ToggleActiveSyncTab; SwitchToMode "Normal"; }
@@ -141,7 +143,6 @@ keybinds clear-defaults=true {
     }
     shared_except "locked" {
         bind "Ctrl x" { SwitchToMode "Locked"; }
-        bind "Ctrl q" { Quit; }
         bind "Alt p" { NewPane; }
         bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
         bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
@@ -311,5 +312,4 @@ theme "dracula"
 // The folder in which Zellij will look for themes
 //
 // theme_dir "/path/to/my/theme_dir"
-
 session_serialization false

@@ -532,7 +532,7 @@ require('lazy').setup({
           -- Wind Setup:
           ---------------------
           if client.server_capabilities.inlayHintProvider then
-            map('<leader>ih', function() vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled()) end, "Toggle [I]nlay [H]int")
+            map("<leader>ih", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, "Toggle [I]nlay [H]int")
           end
           client.server_capabilities.semanticTokensProvider = nil
         end,
@@ -1046,7 +1046,7 @@ gitsigns.setup({
 })
 
 -- setup short key for formatting python code
-vim.keymap.set('n', '<leader>f', '<cmd>!black %<CR>', { desc = 'formatting python code use black' })
+vim.keymap.set('n', '<leader>f', "<cmd>!black --line-length 110 '%'<CR>", { desc = 'formatting python code use black' })
 
 -- setting up a command to toggle format-on-save
 require("conform").setup({
