@@ -598,12 +598,17 @@ require('lazy').setup({
         -- e.g: I want to use python-ruff-plugin, then I need to run `:PylspInstall python-lsp-ruff`
         -- refer to: https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/server_configurations/pylsp/README.md
         pylsp = {
-          pylsp = {
-            plugins = {
-              autopep8 = { enabled = false },
-              yapf = { enabled = false },
+          settings = {
+            pylsp = {
+                plugins = {
+                autopep8 = { enabled = false },
+                yapf = { enabled = false },
+                pycodestyle = { enabled = false },
+                pyflakes = { enabled = false },
+                ruff = { enabled = true },
+                },
             },
-          },
+          }
         },
       }
 
