@@ -240,7 +240,8 @@ plugins {
 // Default: default
 //
 // theme "default"
-theme "dracula"
+// theme "dracula"
+theme "nord"
 
 // The name of the default layout to load on startup
 // Default: "default"
