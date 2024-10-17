@@ -23,7 +23,7 @@ export def del-remote-branches [
     let branch_names = $branch | each {|r| parse "origin/{name}" | get name } | flatten
     for name in $branch_names {
         if ($name not-in $excepts) {
-            git push -u origin $":($name)"
+            do -i { git push -u origin $":($name)" }
         }
     }
 }
