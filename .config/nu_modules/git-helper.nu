@@ -29,7 +29,7 @@ export def del-remote-branches [
 }
 
 # wrapper for git push and copy pull request link
-export def push-show-pr [copy_to_board: bool = true] -> string {
+export def push-show-pr [copy_to_board: bool = true]: nothing -> string {
     let current_branch = (git branch --show-current)
     let push_output = (do { git push -u origin $current_branch } | complete | get stderr | lines)
     mut pr_prompt_index = -1
