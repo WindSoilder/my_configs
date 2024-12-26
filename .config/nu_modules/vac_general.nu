@@ -13,21 +13,20 @@ export def main [word: string, dict_file_name: path] {
         return ($dict_data | get $word)
     } else {
         # query from web
-        try {
-            let result = http get $"https://www.oxfordlearnersdictionaries.com/definition/english/($word)?q=($word)" -m 4 |
-                query web --query 'span[class="def"]' | each {|it| $it | str join ''} | flatten
+        let body = http get $"https://www.oxfordlearnersdictionaries.com/search/english/?q=($word)" -m 4sec
+        let result = $body | query web --query  'span[class="def"]' | each {|it| $it | str join ''} | flatten
+        if (not ($result | is-empty)) {
             let dict_data = $dict_data | upsert $word $result
             $dict_data | to json -r | save -rf $dict_file_name
             $result
-        } catch {|e| 
-                if (($e | get msg) == "Network failure") and ("404" in ($e | get debug)) {
-                    let spell_check = http get $"https://www.oxfordlearnersdictionaries.com/spellcheck/english/?q=($word)" -m 4 |
-                        query web --query 'div[id="results-container-all"]' | flatten |
-                        str trim | filter {|x| ($x | str length) != 0} | str join "\n\n"
-                    $spell_check
-            } else {
-                error make ($e | get raw)
-            }
+        } else {
+            let spell_check = $body | query web --query 'div[id="results-container-all"]' |
+                flatten |
+                str trim |
+                take until {|x| $x | str starts-with "Nearest results from our other dictionaries and grammar usage guide" } |
+                filter {|x| ($x | str length) != 0} |
+                str join "\n\n"
+            $spell_check
         }
     }
 }
