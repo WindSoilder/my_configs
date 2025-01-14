@@ -34,7 +34,7 @@ export def push-show-pr [copy_to_board: bool = true]: nothing -> string {
     let push_output = (do { git push -u origin $current_branch } | complete | get stderr | lines)
     mut pr_prompt_index = -1
     for l in ($push_output | enumerate) {
-        if ($l.item | str contains "Create pull request") {
+        if (($l.item | str contains "Create pull request") or ($l.item | str contains "View pull request")) {
             $pr_prompt_index = $l.index
             break
         }
