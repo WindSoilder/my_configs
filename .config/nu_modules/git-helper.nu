@@ -8,7 +8,7 @@ export def del-branches [
         if ($it not-in $excepts) and (not ($it | str starts-with "*")) {
             git branch -D $it
             if $remote {
-                git push -u origin $":($it)"
+                do -i { git push -u origin $":($it)" }
             }
         }
     }
