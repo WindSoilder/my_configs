@@ -30,3 +30,15 @@ export def main [word: string, dict_file_name: path] {
         }
     }
 }
+
+export def vl [word: string] {
+    main $word ~/dicts/life.json
+}
+
+export def vp [word: string] {
+    main $word ~/dicts/pg_books.json
+}
+
+export def vb [word: string] {
+    main $word ~/dicts/baldur-gate.json
+}
