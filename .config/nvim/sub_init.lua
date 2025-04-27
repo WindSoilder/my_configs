@@ -940,10 +940,11 @@ require('lazy').setup({
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
       'nvim-treesitter/nvim-treesitter-context',
+      'nushell/tree-sitter-nu',
     },
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'nuG' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -1206,21 +1207,12 @@ lspconfig.nushell.setup {
 }
 
 -- setting up nushell filetype support
-vim.filetype.add({
-    extension = {
-        nu = "nu",
-        nush = "nu",
-        nuon = "nu",
-        nushell = "nu",
-    },
-})
-
-local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-parser_config.nu = {
-  install_info = {
-    url = "https://github.com/nushell/tree-sitter-nu",
-    files = { "src/parser.c" },
-    branch = "main",
-  },
-  filetype = "nu",
-}
+-- Wind note: just here for debugging for a while
+-- vim.filetype.add({
+--     extension = {
+--         nu = "nu",
+--         nush = "nu",
+--         nuon = "nu",
+--         nushell = "nu",
+--     },
+-- })
