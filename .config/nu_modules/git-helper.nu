@@ -19,7 +19,7 @@ export def del-remote-branches [
 ] {
     let excepts = $excepts | append ['master', 'main', 'develop']
     let branch = git branch -r | lines | str trim
-    let branch = $branch | filter {|r| ($r | str starts-with "origin/") and ($r | str starts-with "origin/HEAD" | not $in)}
+    let branch = $branch | where {|r| ($r | str starts-with "origin/") and ($r | str starts-with "origin/HEAD" | not $in)}
     let branch_names = $branch | each {|r| parse "origin/{name}" | get name } | flatten
     for name in $branch_names {
         if ($name not-in $excepts) {

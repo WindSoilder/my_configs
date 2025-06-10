@@ -20,7 +20,7 @@ def update-nu [] {
         | select tag_name name published_at assets_url assets
         | get 0
         | get assets.browser_download_url
-        | filter { $in =~ $"($machine)-($os_name)" }
+        | where { $in =~ $"($machine)-($os_name)" }
         | get 0
     cd /tmp
     print $"downloading from ($link)"

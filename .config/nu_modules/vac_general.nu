@@ -24,7 +24,7 @@ export def main [word: string, dict_file_name: path] {
                 flatten |
                 str trim |
                 take until {|x| $x | str starts-with "Nearest results from our other dictionaries and grammar usage guide" } |
-                filter {|x| ($x | str length) != 0} |
+                where {|x| ($x | str length) != 0} |
                 str join "\n\n"
             $spell_check
         }
