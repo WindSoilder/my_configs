@@ -12,9 +12,9 @@ export def install-all [] {
     $env.PATH = ($env.PATH | append ~/.cargo/bin/)
     install-tools
     print "setting up nushell modules"
-    mkdir ~/.config/nushell/nu_modules
+    mkdir ~/.config/nushell/scripts/
     cp ../nushell/config.nu ~/.config/nushell/config.nu
-    cp * ~/.config/nushell/nu_modules/
+    cp * ~/.config/nushell/scripts/
 }
 
 export def install-rust [] {
