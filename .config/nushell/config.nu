@@ -22,6 +22,11 @@ $env.config.shell_integration.osc8 = false
 $env.EDITOR = "nvim"
 source ~/.zoxide.nu
 source ~/.local/share/atuin/init.nu
+alias lt = exa --tree --level=2 --long --icons --git
+use vac_general.nu [vl, vp]
+use git-helper.nu *
+use updater.nu *
+use job-util.nu [fgr tgl]
 
 let carapace_completer = {|spans|
     carapace $spans.0 nushell ...$spans | from json
@@ -66,7 +71,7 @@ let external_completer = {|spans|
 
 $env.config.completions = {
     external: {
-        enable: true
+    enable: true
         completer: $external_completer
     }
 }
