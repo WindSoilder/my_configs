@@ -50,7 +50,7 @@ export def install-neovim [] {
 }
 
 export def install-tools [] {
-    for bin in ["zellij", "ripgrep", "difftastic", "vivid", "bat", "git-delta"] {
+    for bin in ["zellij", "ripgrep", "difftastic", "vivid", "bat", "git-delta", "starship"] {
         print $"install ($bin)"
         cargo install $bin
     }
@@ -66,4 +66,7 @@ export def install-packages [] {
     sudo zypper install gcc-c++ -y
     sudo zypper install clang -y
     sudo zypper install gh -y
+    sudo zypper install fish -y
+    zypper ar --gpgcheck-allow-unsigned -f https://yum.fury.io/rsteube/ carapace
+    zypper install carapace-bin
 }
