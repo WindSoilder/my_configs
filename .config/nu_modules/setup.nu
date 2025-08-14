@@ -50,7 +50,7 @@ export def install-neovim [] {
 }
 
 export def install-tools [] {
-    for bin in ["zellij", "ripgrep", "difftastic", "vivid", "bat", "git-delta", "starship"] {
+    for bin in ["zellij", "ripgrep", "difftastic", "vivid", "bat", "git-delta", "starship", "exa"] {
         print $"install ($bin)"
         cargo install $bin
     }
