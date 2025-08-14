@@ -20,14 +20,62 @@ $env.PATH = ($env.PATH | append ~/.cargo/bin/ | append ~/.local/bin/)
 $env.LS_COLORS = (vivid generate nord)
 $env.config.shell_integration.osc8 = false
 $env.EDITOR = "nvim"
+
 source ~/.zoxide.nu
 source ~/.local/share/atuin/init.nu
+
 alias lt = exa --tree --level=2 --long --icons --git
+alias zl = zellij ls
+alias za = zellij attach
+alias zs = zellij -n compact -s
+alias gs = git switch
+alias gr = git restore
+
+# cargo relative alias
+alias ct = cargo test
+alias cb = cargo build
+alias ci = cargo install --path .
+alias cbr = cargo build --release
+
 use vac_general.nu [vl, vp]
 use git-helper.nu *
 use updater.nu *
 use job-util.nu [fgr tgl]
 
+export def lg [] {
+    ls | sort-by type | grid -c -i
+}
+
+export def --env proxy [] {
+    let new_env = {
+        http_proxy: "socks5://127.0.0.1:8889"
+        https_proxy: "socks5://127.0.0.1:8889"
+    }
+    load-env $new_env
+}
+
+export def --env noproxy [] {
+    hide-env http_proxy
+    hide-env https_proxy
+}
+
+export def sync [--pull] {
+    gh repo sync WindSoilder/nushell --source nushell/nushell
+    gh repo sync WindSoilder/reedline --source nushell/reedline
+    gh repo sync WindSoilder/nu_scripts --source nushell/nu_scripts
+    gh repo sync WindSoilder/zed --source zed-industries/zed
+
+    if $pull {
+        cd /Users/chenhongze/projects/rust_online_code/nushell
+        git fetch
+        cd /Users/chenhongze/projects/rust_online_code/reedline
+        git fetch
+        cd /Users/chenhongze/projects/rust_online_code/zed
+        git fetch
+    }
+}
+
+# setup external completer
 let carapace_completer = {|spans|
     carapace $spans.0 nushell ...$spans | from json
 }
@@ -71,7 +119,7 @@ let external_completer = {|spans|
 
 $env.config.completions = {
     external: {
-    enable: true
+        enable: true
         completer: $external_completer
     }
 }
