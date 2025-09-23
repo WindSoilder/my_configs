@@ -1233,18 +1233,24 @@ end, {
 })
 
 -- setting up nushell language server support.
-local lspconfig = require('lspconfig')
-lspconfig.nushell.setup {
-  cmd = { "nu", "--lsp" },
-  filetypes = { "nu" },
-  root_dir = function(fname)
-    local git_root = lspconfig.util.find_git_ancestor(fname)
-    if git_root then
-      return git_root
-    else
-      return vim.fn.fnamemodify(fname, ":p:h") -- get the parent directory of the file
-    end
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "nu",
+  callback = function(args)
+    vim.lsp.start({
+      name = "nushell",
+      cmd = { "nu", "--lsp" },
+      root_dir = function(fname)
+        -- You may still use lspconfig.util if available
+        local util = require("lspconfig.util")
+        local git_root = util.find_git_ancestor(fname)
+        if git_root then
+          return git_root
+        else
+          return vim.fn.fnamemodify(fname, ":p:h")
+        end
+      end,
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
   end,
-  capabilities = capabilities,
-  on_attach = on_attach,
-}
+})
