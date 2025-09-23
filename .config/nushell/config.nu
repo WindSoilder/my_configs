@@ -123,3 +123,11 @@ $env.config.completions = {
         completer: $external_completer
     }
 }
+
+$env.config.keybindings ++= [{
+    name: insert_new_line
+    modifier: control
+    keycode: char_j
+    mode: emacs
+    event: { edit: InsertString, value: "\n"}
+}]
