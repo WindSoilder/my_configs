@@ -1,4 +1,7 @@
 export def install-all [] {
+    touch ~/.zoxide.nu
+    mkdir ~/.local/share/atuin
+    touch ~/.local/share/atuin/init.nu
     # rust
     print "installing rust"
     install-rust
@@ -15,6 +18,9 @@ export def install-all [] {
     mkdir ~/.config/nushell/scripts/
     cp ../nushell/config.nu ~/.config/nushell/config.nu
     cp * ~/.config/nushell/scripts/
+
+    print "install win32 yank"
+    install-win32yank
 }
 
 export def install-rust [] {
@@ -26,9 +32,9 @@ export def install-neovim [] {
     let kernel_name = uname | get kernel-name | str downcase
     let machine = uname | get machine
     let os_name = if $kernel_name == "linux" {
-        "linux64"
+        "linux-x86_64"
     } else {
-        "macos-x86_64"
+        "macos-arm64"
     }
     let base = $"nvim-($os_name)"
     let f = $"($base).tar.gz"
@@ -47,26 +53,40 @@ export def install-neovim [] {
 
     print "cleaning..."
     rm $f
+    if (not ('/usr/local/bin/nvim' | path exists)) {
+        sudo ln -s /home/windsoilder/nvim-linux64/bin/nvim /usr/local/bin/nvim
+    }
 }
 
 export def install-tools [] {
-    for bin in ["zellij", "ripgrep", "difftastic", "vivid", "bat", "git-delta", "starship", "exa"] {
+    for bin in ["zellij", "ripgrep", "difftastic", "vivid", "bat", "git-delta", "starship", "exa", "atuin"] {
         print $"install ($bin)"
         cargo install $bin
     }
     print "install uv"
     curl -LsSf https://astral.sh/uv/install.sh | sh
+    zoxide init nushell | save -f ~/.zoxide.nu
 }
 
 export def install-packages [] {
-    sudo zypper install git -y
-    sudo zypper install gcc -y
-    sudo zypper install htop -y
-    sudo zypper install make -y
-    sudo zypper install gcc-c++ -y
-    sudo zypper install clang -y
-    sudo zypper install gh -y
-    sudo zypper install fish -y
+    sudo zypper install -y git
+    sudo zypper install -y gcc
+    sudo zypper install -y htop
+    sudo zypper install -y make
+    sudo zypper install -y gcc-c++
+    sudo zypper install -y clang
+    sudo zypper install -y gh
+    sudo zypper install -y fish
+    sudo zypper install -y mold
     zypper ar --gpgcheck-allow-unsigned -f https://yum.fury.io/rsteube/ carapace
-    zypper install carapace-bin
+    zypper install -y carapace-bin
+}
+
+export def install-win32yank [] {
+    cd /tmp
+    wget https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
+    unzip /tmp/win32yank.zip
+    chmod +x /tmp/win32yank.exe
+    sudo mv /tmp/win32yank.exe /usr/local/bin/
+    rm win32yank.zip
 }

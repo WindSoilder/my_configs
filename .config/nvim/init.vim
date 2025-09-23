@@ -1,8 +1,17 @@
-packadd! dracula_pro
-
-colorscheme dracula_pro
-
 set grepprg=rg\ --vimgrep
 set relativenumber
 luafile ~/.config/nvim/sub_init.lua
 
+
+let g:clipboard = {
+\ 'name': 'win32yank',
+\ 'copy': {
+\   '+': ['win32yank.exe', '-i', '--crlf'],
+\   '*': ['win32yank.exe', '-i', '--crlf'],
+\ },
+\ 'paste': {
+\   '+': ['win32yank.exe', '-o', '--lf'],
+\   '*': ['win32yank.exe', '-o', '--lf'],
+\ },
+\ 'cache_enabled': 0,
+\ }
