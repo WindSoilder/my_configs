@@ -721,7 +721,7 @@ require('lazy').setup({
         -----------------------
         -- For python lsp, to install third party plugin, need to run `:PylspInstall`
         -- e.g: I want to use python-ruff-plugin, then I need to run `:PylspInstall python-lsp-ruff`
-        -- refer to: https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/server_configurations/pylsp/README.md
+        -- refer to: https://github.com/mason-org/mason-lspconfig.nvim/blob/v1.x/lua/mason-lspconfig/server_configurations/pylsp/README.md
         pylsp = {
           settings = {
             pylsp = {
