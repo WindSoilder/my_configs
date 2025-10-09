@@ -41,6 +41,7 @@ use vac_general.nu [vl, vp]
 use git-helper.nu *
 use updater.nu *
 use job-util.nu [fgr tgl]
+use wsl-utils.nu *
 
 export def lg [] {
     ls | sort-by type | grid -c -i
