@@ -1,14 +1,25 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
 [
   {
     "context": "Terminal",
     "bindings": {
       "alt-b": ["terminal::SendText", "\u001b\u0062"],
-      "alt-f": ["terminal::SendText", "\u001b\u0066"]
+      "alt-f": ["terminal::SendText", "\u001b\u0066"],
+      "ctrl-p": ["terminal::SendKeystroke", "ctrl-p"],
+      "ctrl-n": ["terminal::SendKeystroke", "ctrl-n"],
+      "ctrl-k": ["terminal::SendKeystroke", "ctrl-k"]
     }
   },
   {
     "bindings": {
-      "alt-g": "go_to_line::Toggle"
+      "ctrl-w": null,
+      "ctrl-j": "terminal_panel::Toggle"
     }
   },
   {
@@ -17,10 +28,15 @@
       "shift-y": ["workspace::SendKeystrokes", "y $"],
       "g c": "editor::ToggleComments",
       "g r": "editor::FindAllReferences",
+      "g r d": "editor::GoToDefinition",
+      "g r r": "editor::FindAllReferences",
+      "g r n": "editor::Rename",
+      "space g n": "editor::GoToHunk",
+      "space g p": "editor::GoToPreviousHunk",
+      "space h r": "git::Restore",
+      "space s g": "workspace::NewSearch",
       "space s f": "file_finder::Toggle",
-      "space r n": "editor::Rename",
-      "space n h": "editor::GoToHunk",
-      "space p h": "editor::GoToPrevHunk"
+      "space o": "outline::Toggle"
     }
   },
   {
@@ -31,7 +47,8 @@
       "ctrl-n": "editor::MoveDown",
       "ctrl-p": "editor::MoveUp",
       "alt-b": "editor::MoveToPreviousWordStart",
-      "alt-f": "editor::MoveToNextWordEnd"
+      "alt-f": "editor::MoveToNextWordEnd",
+      "ctrl-v": "editor::Paste"
     }
   },
   {
@@ -42,3 +59,4 @@
     }
   }
 ]
+
