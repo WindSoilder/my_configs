@@ -249,7 +249,10 @@ rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+  {
+    'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+    config = function() require('guess-indent').setup {} end,
+  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -722,15 +725,15 @@ require('lazy').setup({
         -- For python lsp, to install third party plugin, need to run `:PylspInstall`
         -- e.g: I want to use python-ruff-plugin, then I need to run `:PylspInstall python-lsp-ruff`
         -- refer to: https://github.com/mason-org/mason-lspconfig.nvim/blob/v1.x/lua/mason-lspconfig/server_configurations/pylsp/README.md
-        pylsp = {
-          settings = {
-            pylsp = {
-                plugins = {
-                    ruff = { enabled = true },
-                },
-            },
-          }
-        },
+        -- pylsp = {
+        --   settings = {
+        --     pylsp = {
+        --         plugins = {
+        --             ruff = { enabled = true },
+        --         },
+        --     },
+        --   }
+        -- },
       }
 
       -- Ensure the servers and tools above are installed
@@ -914,19 +917,47 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'catppuccin/nvim',
+    -- 'catppuccin/nvim',
+    -- 'uhs-robert/oasis.nvim',
+    -- 'projekt0n/github-nvim-theme',
+    -- 'sainnhe/gruvbox-material',
+    -- 'ribru17/bamboo.nvim',
+    'rebelot/kanagawa.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
       ---@diagnostic disable-next-line: missing-fields
-      require('catppuccin').setup {
-        styles = {
-          comments = { "italic" }, -- Disable italics in comments
-        },
-      }
-
+      -- require('catppuccin').setup {
+      --   styles = {
+      --     comments = { "italic" }, -- Disable italics in comments
+      --   },
+      -- }
       -- Load the colorscheme here.
-      vim.cmd.colorscheme 'catppuccin-mocha'
-    end,
+      -- vim.cmd.colorscheme 'github_dark'
+      -- vim.g.gruvbox_material_background = 'hard'
+      -- vim.g.gruvbox_material_enable_italic = true
+      local hour = tonumber(os.date("%H"))
+      if hour >= 7 and hour < 18 then
+        vim.cmd.colorscheme("kanagawa-lotus")
+      else
+        vim.cmd.colorscheme("kanagawa-dragon")
+      end
+      end,
+  },
+
+  {
+    'catppuccin/nvim',
+    config = function()
+      ---@diagnostic disable-next-line: missing-fields
+      -- require('catppuccin').setup {
+      --   styles = {
+      --     comments = { "italic" }, -- Disable italics in comments
+      --   },
+      -- }
+      -- Load the colorscheme here.
+      -- vim.cmd.colorscheme 'github_dark'
+      -- vim.g.gruvbox_material_background = 'hard'
+      -- vim.g.gruvbox_material_enable_italic = true
+      end,
   },
 
   -- Highlight todo, notes, etc in comments
@@ -969,92 +1000,141 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    init = function()
+      vim.g.no_plugin_maps = true
+    end,
+      config = function()
+        -- Module configuration (no nvim-treesitter.configs needed)
+        require("nvim-treesitter-textobjects").setup({
+          select = {
+            lookahead = true,
+            include_surrounding_whitespace = false,
+            -- optional:
+            -- selection_modes = {
+            --   ["@parameter.outer"] = "v",
+            --   ["@function.outer"] = "V",
+            -- },
+          },
+          move = { set_jumps = true },
+        })
+
+        -- -----------------------
+        -- Select textobjects
+        -- -----------------------
+        vim.keymap.set({ "x", "o" }, "af", function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+        end, { desc = "TS: around function" })
+
+        vim.keymap.set({ "x", "o" }, "if", function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+        end, { desc = "TS: inner function" })
+
+        vim.keymap.set({ "x", "o" }, "ac", function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+        end, { desc = "TS: around class" })
+
+        vim.keymap.set({ "x", "o" }, "ic", function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+        end, { desc = "TS: inner class" })
+
+        vim.keymap.set({ "x", "o" }, "aa", function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@parameter.outer", "textobjects")
+        end, { desc = "TS: outer parameter" })
+
+        vim.keymap.set({ "x", "o" }, "ia", function()
+          require("nvim-treesitter-textobjects.select").select_textobject("@parameter.inner", "textobjects")
+        end, { desc = "TS: inner parameter" })
+        -- -----------------------
+        -- Swap parameters
+        -- -----------------------
+        vim.keymap.set("n", "<leader>a", function()
+          require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
+        end, { desc = "TS: swap next parameter" })
+
+        vim.keymap.set("n", "<leader>A", function()
+          require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.outer")
+        end, { desc = "TS: swap prev parameter" })
+
+        -- -----------------------
+        -- Move (function/class)
+        -- -----------------------
+        vim.keymap.set({ "n", "x", "o" }, "]m", function()
+          require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
+        end, { desc = "TS: next function start" })
+
+        vim.keymap.set({ "n", "x", "o" }, "[m", function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start("@function.outer", "textobjects")
+        end, { desc = "TS: prev function start" })
+
+        vim.keymap.set({ "n", "x", "o" }, "]]", function()
+          require("nvim-treesitter-textobjects.move").goto_next_start("@class.outer", "textobjects")
+        end, { desc = "TS: next class start" })
+
+        vim.keymap.set({ "n", "x", "o" }, "[[", function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start("@class.outer", "textobjects")
+        end, { desc = "TS: prev class start" })
+
+        vim.keymap.set({ "n", "x", "o" }, "]M", function()
+          require("nvim-treesitter-textobjects.move").goto_next_end("@function.outer", "textobjects")
+        end, { desc = "TS: next function end" })
+
+        vim.keymap.set({ "n", "x", "o" }, "[M", function()
+          require("nvim-treesitter-textobjects.move").goto_previous_end("@function.outer", "textobjects")
+        end, { desc = "TS: prev function end" })
+
+        vim.keymap.set({ "n", "x", "o" }, "][", function()
+          require("nvim-treesitter-textobjects.move").goto_next_end("@class.outer", "textobjects")
+        end, { desc = "TS: next class end" })
+
+        vim.keymap.set({ "n", "x", "o" }, "[]", function()
+          require("nvim-treesitter-textobjects.move").goto_previous_end("@class.outer", "textobjects")
+        end, { desc = "TS: prev class end" })
+
+        -- -----------------------
+        -- Optional: repeat moves with ; and ,
+        -- -----------------------
+        local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
+        vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next, { desc = "TS: repeat last move next" })
+        vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous, { desc = "TS: repeat last move prev" })
+  end,
+  },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     -------------------
     -- Wind Setup:
     -------------------
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
       'nvim-treesitter/nvim-treesitter-context',
     },
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-    opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'nu' },
-      -- Autoinstall languages that are not installed
-      auto_install = true,
-      highlight = {
-        enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
-      },
-      indent = { enable = true, disable = { 'ruby' } },
-      -------------------
-      -- Wind Setup:
-      -------------------
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = '<c-space>',
-          node_incremental = '<c-i>',
-          scope_incremental = '<c-s>',
-          node_decremental = '<c-d>',
-        },
-      },
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ['aa'] = '@parameter.outer',
-            ['ia'] = '@parameter.inner',
-            ['af'] = '@function.outer',
-            ['if'] = '@function.inner',
-            ['ac'] = '@class.outer',
-            ['ic'] = '@class.inner',
-          },
-        },
-        move = {
-          enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            [']m'] = '@function.outer',
-            [']]'] = '@class.outer',
-          },
-          goto_next_end = {
-            [']M'] = '@function.outer',
-            [']['] = '@class.outer',
-          },
-          goto_previous_start = {
-            ['[m'] = '@function.outer',
-            ['[['] = '@class.outer',
-          },
-          goto_previous_end = {
-            ['[M'] = '@function.outer',
-            ['[]'] = '@class.outer',
-          },
-        },
-        swap = {
-          enable = true,
-          swap_next = {
-            ['<leader>a'] = '@parameter.inner',
-          },
-          swap_previous = {
-            ['<leader>A'] = '@parameter.inner',
-          },
-        },
-      },
-    },
     config = function(_, opts)
-      -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+      local parsers = { 'python', 'rust', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'nu' }
+      require('nvim-treesitter').install(parsers)
+      vim.api.nvim_create_autocmd('FileType', {
+          callback = function(args)
+            local buf, filetype = args.buf, args.match
 
-      ---@diagnostic disable-next-line: missing-fields
-      require('nvim-treesitter.configs').setup(opts)
+            local language = vim.treesitter.language.get_lang(filetype)
+            if not language then return end
+
+            -- check if parser exists and load it
+            if not vim.treesitter.language.add(language) then return end
+            -- enables syntax highlighting and other treesitter features
+            vim.treesitter.start(buf, language)
+
+            -- enables treesitter based folds
+            -- for more info on folds see `:help folds`
+            -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+            -- vim.wo.foldmethod = 'expr'
+
+            -- enables treesitter based indentation
+            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end,
+        })
 
       -- There are additional nvim-treesitter modules that you can use to interact
       -- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -1099,6 +1179,10 @@ require('lazy').setup({
       })
     end
   },
+
+  {
+    "github/copilot.vim"
+  }
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
