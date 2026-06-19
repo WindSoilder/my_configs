@@ -19,5 +19,5 @@ export def fgr [ t: string ]: nothing -> nothing {
 # It's useful when you want to tag a job which has just been frozen.
 export def tgl [ t: string ]: nothing -> nothing {
     let latest_job_id = job list | sort-by id --reverse | get id.0
-    job tag $latest_job_id $t
+    job describe $latest_job_id $t
 }

@@ -1,13 +1,13 @@
-def update-all [] {
+export def update-all [] {
     print "============= updating nu ================="
     update-nu
     print "============= updating neovim ================="
     update-nvim
 }
 
-def update-nu [] {
+export def update-nu [] {
     print "fetching downloading link"
-    let kernel_name = uname | get kernel-name | str downcase
+    let kernel_name = uname | get kernel-name | str lowercase
     let machine = uname | get machine
     let os_name = if $kernel_name == "linux" {
         "unknown-linux-gnu"
@@ -42,12 +42,12 @@ def update-nu [] {
     rm -rf nu-*
 }
 
-def update-nvim [] {
+export def update-nvim [] {
     cd /tmp
-    let kernel_name = uname | get kernel-name | str downcase
+    let kernel_name = uname | get kernel-name | str lowercase
     let machine = uname | get machine
     let os_name = if $kernel_name == "linux" {
-        "linux64"
+        "linux-x86_64"
     } else {
         "macos-x86_64"
     }

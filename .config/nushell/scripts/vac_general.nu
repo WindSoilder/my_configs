@@ -13,7 +13,7 @@ export def main [word: string, dict_file_name: path] {
         return ($dict_data | get $word)
     } else {
         # query from web
-        let body = http get $"https://www.oxfordlearnersdictionaries.com/search/english/?q=($word)" -m 4sec
+        let body = http get $"https://www.oxfordlearnersdictionaries.com/search/english/?q=($word)" -m 7sec
         let result = $body | query web --query  'span[class="def"]' | each {|it| $it | str join ''} | flatten
         if (not ($result | is-empty)) {
             let dict_data = $dict_data | upsert $word $result
@@ -35,10 +35,18 @@ export def vl [word: string] {
     main $word ~/dicts/life.json
 }
 
+export def va [word: string] {
+    main $word ~/dicts/age_of_empire.json
+}
+
 export def vp [word: string] {
     main $word ~/dicts/pg_books.json
 }
 
 export def vb [word: string] {
     main $word ~/dicts/baldur-gate.json
+}
+
+export def vs [word: string] {
+    main $word ~/dicts/skyrim.json
 }
