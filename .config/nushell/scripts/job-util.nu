@@ -1,8 +1,8 @@
 # Unfreeze job which have tags like `t`.
 export def fgr [ t: string ]: nothing -> nothing {
-    let jobs = job list | where tag like $t
+    let jobs = job list | where description like $t
     if ($jobs | is-empty) {
-        error make {msg: $"can't find a job with given tag `($t)`"}
+        error make {msg: $"can't find a job with given description `($t)`"}
     } else if ($jobs | length) == 1 {
         job unfreeze ($jobs | get id.0)
     } else {
@@ -14,10 +14,10 @@ export def fgr [ t: string ]: nothing -> nothing {
     }
 }
 
-# Tag a command with latest id
+# Description a command with latest id
 #
 # It's useful when you want to tag a job which has just been frozen.
-export def tgl [ t: string ]: nothing -> nothing {
+export def dgl [ t: string ]: nothing -> nothing {
     let latest_job_id = job list | sort-by id --reverse | get id.0
     job describe $latest_job_id $t
 }

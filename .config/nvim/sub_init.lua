@@ -119,6 +119,8 @@ vim.o.showmode = false
 vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
+-- Wind setup
+vim.keymap.set('n', '<leader>P', '<cmd>:let @+=@%<CR>', { desc = 'Copy current file path' })
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -936,11 +938,12 @@ require('lazy').setup({
       -- vim.g.gruvbox_material_background = 'hard'
       -- vim.g.gruvbox_material_enable_italic = true
       local hour = tonumber(os.date("%H"))
-      if hour >= 7 and hour < 18 then
-        vim.cmd.colorscheme("kanagawa-lotus")
-      else
-        vim.cmd.colorscheme("kanagawa-dragon")
-      end
+      -- if hour >= 7 and hour < 18 then
+      --   vim.cmd.colorscheme("kanagawa-lotus")
+      -- else
+      --   vim.cmd.colorscheme("kanagawa-dragon")
+      -- end
+      vim.cmd.colorscheme("kanagawa-dragon")
       end,
   },
 
@@ -1093,12 +1096,6 @@ require('lazy').setup({
           require("nvim-treesitter-textobjects.move").goto_previous_end("@class.outer", "textobjects")
         end, { desc = "TS: prev class end" })
 
-        -- -----------------------
-        -- Optional: repeat moves with ; and ,
-        -- -----------------------
-        local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
-        vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next, { desc = "TS: repeat last move next" })
-        vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous, { desc = "TS: repeat last move prev" })
   end,
   },
   { -- Highlight, edit, and navigate code

@@ -40,7 +40,7 @@ alias cbr = cargo build --release
 use vac_general.nu [vl, vp]
 use git-helper.nu *
 use updater.nu *
-use job-util.nu [fgr tgl]
+use job-util.nu [fgr dgl]
 use wsl-utils.nu *
 
 export def lg [] {
