@@ -199,24 +199,8 @@ do
     float = { border = 'rounded', source = 'if_many' },
     underline = { severity = { min = vim.diagnostic.severity.WARN } },
 
-    -----------------
-    -- Wind setup:
-    -----------------
-    signs = vim.g.have_nerd_font and {
-      text = {
-        [vim.diagnostic.severity.ERROR] = '󰅚 ',
-        [vim.diagnostic.severity.WARN] = '󰀪 ',
-        [vim.diagnostic.severity.INFO] = '󰋽 ',
-        [vim.diagnostic.severity.HINT] = '󰌶 ',
-      },
-    } or {},
-
     -- Can switch between these as you prefer
-    virtual_text = {
-      source = 'if_many',
-      spacing = 2,
-      format = function(diagnostic) return diagnostic.message end,
-    }, -- Text shows up at the end of the line
+    virtual_text = true, -- Text shows up at the end of the line
     virtual_lines = false, -- Text shows up underneath the line, with virtual lines
 
     -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
@@ -272,11 +256,11 @@ do
 
   -- Highlight when yanking (copying) text
   --  Try it with `yap` in normal mode
-  --  See `:help vim.hl.on_yank()`
+  --  See `:help vim.hl.hl_op()`
   vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight when yanking (copying) text',
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-    callback = function() vim.hl.on_yank() end,
+    callback = function() vim.hl.hl_op() end,
   })
 end
 
@@ -392,8 +376,8 @@ do
       changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
     },
     on_attach = function(bufnr)
-      vim.keymap.set('n', '<leader>gp', gitsigns.prev_hunk, { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
-      vim.keymap.set('n', '<leader>gn', gitsigns.next_hunk, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
+      vim.keymap.set('n', '<leader>gp', function() gitsigns.nav_hunk('prev') end, { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
+      vim.keymap.set('n', '<leader>gn', function() gitsigns.nav_hunk('next') end, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
       vim.keymap.set('n', '<leader>ph', gitsigns.preview_hunk, { buffer = bufnr, desc = '[P]review [H]unk' })
       vim.keymap.set('n', '<leader>hr', gitsigns.reset_hunk, { buffer = bufnr, desc = '[H]unk [R]eset' })
     end,
@@ -702,13 +686,13 @@ do
       if client and client:supports_method('textDocument/documentHighlight', event.buf) then
         local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
         vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-          buffer = event.buf,
+          buf = event.buf,
           group = highlight_augroup,
           callback = vim.lsp.buf.document_highlight,
         })
 
         vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-          buffer = event.buf,
+          buf = event.buf,
           group = highlight_augroup,
           callback = vim.lsp.buf.clear_references,
         })
@@ -717,7 +701,7 @@ do
           group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
           callback = function(event2)
             vim.lsp.buf.clear_references()
-            vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+            vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight',  buf = event2.buf }
           end,
         })
       end
@@ -875,27 +859,23 @@ do
   vim.pack.add { gh 'stevearc/conform.nvim' }
   require('conform').setup {
     notify_on_error = false,
-
-    -----------------
-    -- Wind setup:
-    -----------------
     format_on_save = function(bufnr)
-      -- Disable with a global or buffer-local variable.
-      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return nil end
-
-      -- Disable format-on-save for languages without one well-standardized style.
-      local disable_filetypes = { c = true, cpp = true }
-      if disable_filetypes[vim.bo[bufnr].filetype] then return nil end
-
-      return { timeout_ms = 500, lsp_format = 'fallback' }
+      -- You can specify filetypes to autoformat on save here:
+      local enabled_filetypes = {
+        -- lua = true,
+        -- python = true,
+      }
+      if enabled_filetypes[vim.bo[bufnr].filetype] then
+        return { timeout_ms = 500 }
+      else
+        return nil
+      end
     end,
     default_format_opts = {
       lsp_format = 'fallback', -- Use external formatters if configured below, otherwise use LSP formatting. Set to `false` to disable LSP formatting entirely.
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
-      lua = { 'stylua' },
-
       -----------------
       -- Wind setup:
       -----------------
