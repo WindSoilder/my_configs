@@ -1,6 +1,12 @@
 # Query for the meaning of `word`.  And save the meaning locally to `dict_file_name`
 #
 # Note that `dict_file_name` should be a json file
+#
+# data format (v1):
+# {"word": [def1, def2, def3]}
+# data format (v2):
+# {"word\n- example1\n- example2": [def1, def2, def3]}
+# the key or v2 looks ugly, but the dict itself is compatible with v1.
 export def main [word: string, dict_file_name: path] {
     if not ($dict_file_name | path exists) {
         "{}" o> $dict_file_name
@@ -9,16 +15,48 @@ export def main [word: string, dict_file_name: path] {
         error make {msg: "dict_file_name should be a json file, which is end with .json"}
     }
     let dict_data = open $dict_file_name
-    if $word in $dict_data {
-        return ($dict_data | get $word)
+
+    # some keys may contain examples, some keys doesn't
+    # so to search if word in $dict_data, we need to search word without example
+    let query_dict = $dict_data |
+        items {|key, val|
+          let key_and_examples = $key | split row "\n"
+          [
+              ($key_and_examples | first),
+              {"d": $val, "e": ($key_and_examples | skip 1)}
+          ]}
+        | into record
+    if $word in $query_dict {
+        let val = $query_dict | get $word
+        if ($val | get "e" | is-not-empty) {
+            return $val
+        } else {
+            return ($val | get "d")
+        }
     } else {
         # query from web
         let body = http get $"https://www.oxfordlearnersdictionaries.com/search/english/?q=($word)" -m 7sec
-        let result = $body | query web --query  'span[class="def"]' | each {|it| $it | str join ''} | flatten
-        if (not ($result | is-empty)) {
-            let dict_data = $dict_data | upsert $word $result
+        let definitions = $body | query web --query  'span[class="def"]' | each {|it| $it | str join ''} | flatten
+        let examples = $body | query web --query 'ul.examples:not(div.collapse *) > li:first-child' |
+            each {|it|
+                $it | where ($it | str trim) != "" | str join ' '
+            } |
+            first 2 |
+            each {|it| "-" + $it}
+        let word_with_examples = if ($examples | is-empty) {
+            $word
+        } else {
+            $word + "\n" + ($examples | str join "\n")
+        };
+        if (not ($definitions | is-empty)) {
+            let dict_data = $dict_data | upsert $word_with_examples $definitions
             $dict_data | to json -r | save -rf $dict_file_name
-            $result
+            # just using a simple character `d` and `e`
+            if ($examples | is-not-empty) {
+               {"d": $definitions, "e": $examples}
+            } else {
+                $definitions
+            }
         } else {
             let spell_check = $body | query web --query 'div[id="results-container-all"]' |
                 flatten |
