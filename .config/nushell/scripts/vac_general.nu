@@ -42,7 +42,7 @@ export def main [word: string, dict_file_name: path] {
                 $it | where ($it | str trim) != "" | str join ' '
             } |
             first 2 |
-            each {|it| "-" + $it}
+            each {|it| "- " + $it}
         let word_with_examples = if ($examples | is-empty) {
             $word
         } else {
