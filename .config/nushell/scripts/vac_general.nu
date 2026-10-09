@@ -81,10 +81,6 @@ export def vp [word: string] {
     main $word ~/dicts/pg_books.json
 }
 
-export def vb [word: string] {
-    main $word ~/dicts/baldur-gate.json
-}
-
-export def vs [word: string] {
-    main $word ~/dicts/skyrim.json
+export def vg [word: string] {
+    main $word ~/dicts/games.json
 }

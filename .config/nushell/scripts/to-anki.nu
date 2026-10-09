@@ -17,3 +17,14 @@ export def main [dict_file: path] {
     $final_data o> $"($file_name).txt"
 }
 
+export def to-json [anki_file: path] {
+    let rows = open $anki_file | lines | skip 2
+    let json_file = $anki_file | split row "." | get 0
+    let json_file = $"($json_file).json"
+    $rows | each {|one_row|
+        let info = $one_row | split row "\t"
+        let name_and_examples = $info | get 0 | str replace "<br>" "\n" -a
+        let definitions = $info | get 1 | split row "<br>"
+        {$name_and_examples: $definitions}
+    } | to json -r | save -f $json_file
+}
