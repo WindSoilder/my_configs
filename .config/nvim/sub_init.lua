@@ -418,16 +418,37 @@ do
   vim.pack.add {
     { src = gh 'catppuccin/nvim', name = 'catppuccin' },
   }
-  ---@diagnostic disable-next-line: missing-fields
-  require('tokyonight').setup {
-    styles = {
-      comments = { italic = false }, -- Disable italics in comments
-    },
-  }
 
   -- Load the colorscheme here. Personal config keeps kanagawa as the active theme,
   -- with tokyonight and catppuccin installed for quick switching.
+  -- vim.cmd.colorscheme 'catppuccin-macchiato'
+  -- vim.g.everforest_enable_italic = true
+  -- vim.g.everforest_background = 'hard'
   vim.cmd.colorscheme 'catppuccin-macchiato'
+
+  local function set_telescope_highlights()
+    local palette = require('catppuccin.palettes').get_palette 'macchiato'
+    vim.api.nvim_set_hl(0, 'TelescopeSelection', {
+      bg = palette.surface1,
+      fg = palette.text,
+      bold = true,
+    })
+    vim.api.nvim_set_hl(0, 'TelescopeSelectionCaret', {
+      bg = palette.surface1,
+      fg = palette.peach,
+      bold = true,
+    })
+    vim.api.nvim_set_hl(0, 'TelescopeMatching', {
+      bg = palette.yellow,
+      fg = palette.crust,
+      bold = true,
+    })
+  end
+  set_telescope_highlights()
+  vim.api.nvim_create_autocmd('ColorScheme', {
+    pattern = 'catppuccin*',
+    callback = set_telescope_highlights,
+  })
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -1114,7 +1135,9 @@ do
   -----------------
   local personal_plugins = {
     gh 'windwp/nvim-autopairs',
-    gh 'stevearc/aerial.nvim',
+    gh 'nvim-lua/plenary.nvim',
+    gh 'nvim-telescope/telescope.nvim',
+    gh 'WindSoilder/aerial.nvim',
     gh 'kevinhwang91/promise-async',
     gh 'kevinhwang91/nvim-ufo',
     gh 'github/copilot.vim',
@@ -1145,6 +1168,43 @@ do
       preview = true,
     },
   }
+
+  require('telescope').setup {
+    extensions = {
+      aerial = {
+        show_hierarchy = true,
+        show_columns = 'symbols',
+      },
+    },
+  }
+  do
+    local pickers = require 'telescope.pickers'
+    if not pickers._aerial_matching_priority_fix then
+      local original_highlight_one_row = pickers._Picker.highlight_one_row
+      function pickers._Picker:highlight_one_row(results_bufnr, prompt, display, row)
+        if not self.sorter.highlighter then return end
+        local highlights = self.sorter:highlighter(prompt, display)
+        if highlights then
+          local ns = vim.api.nvim_create_namespace 'aerial_telescope_matching'
+          vim.api.nvim_buf_clear_namespace(results_bufnr, ns, row, row + 1)
+          for _, match in ipairs(highlights) do
+            local start = type(match) == 'table' and match.start or match
+            local finish = type(match) == 'table' and (match.finish or match.start) or match
+            vim.hl.range(results_bufnr, ns, 'TelescopeMatching', { row, start - 1 }, { row, finish }, { priority = 5000 })
+          end
+        end
+        return original_highlight_one_row(self, results_bufnr, prompt, display, row)
+      end
+      pickers._aerial_matching_priority_fix = true
+    end
+  end
+  require('telescope').load_extension 'aerial'
+  vim.keymap.set('n', '<leader>sa', function()
+    require('telescope').extensions.aerial.aerial()
+  end, { desc = '[S]earch [A]erial symbols' })
+  vim.keymap.set('n', '<leader>sA', function()
+    require('telescope').extensions.aerial.aerial { show_hierarchy = false }
+  end, { desc = '[S]earch flat [A]erial symbols' })
 end
 
 -- ============================================================
